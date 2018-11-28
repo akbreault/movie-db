@@ -3,59 +3,68 @@
 {% block content %}
 
 <h1>Add a movie</h1>
+    
+    <div class="form">
+
+    <span class="error">{{blank_error}}</span>
 
     <form action="/add" method="post">
+        <div class="inner-wrap">
         <p>
-            <label>movie title
+            <label>Movie title
             <input name="title" type="text" value="{{title}}">
             </label>
         </p>
 
         <p>
-            <label>release year   
+            <label>Release Year   
             <input name="release_year" type="text" value="{{release_year}}">
             </label>
         </p>
 
         <p>
-            <label>origin   
+            <label>Origin   
             <input name="origin" type="text" value="{{origin}}">
             </label>
         </p>
     
         <p>
-            <label>director   
+            <label>Director   
             <input name="director" type="text" value="{{director}}">
             </label>
         </p>
         
         <p>
-            <label>cast  
+            <label>Cast  
             <input name="cast" type="text" value="{{cast}}">
             </label>
         </p>
             
         <p>
-            <label>genre   
+            <label>Genre   
             <input name="genre" type="text" value="{{genre}}">
             </label>
         </p>
         
         <p>
-            <label>wiki   
+            <label>Wiki   
             <input name="wiki" type="text" value="{{wiki}}">
             </label>
         </p>
     
         
         <p>
-            <label>plot   
+            <label>Plot
             <input name="plot" type="text" value="{{plot}}">
+            <!--TODO: update to textarea and catch exception if empty-->   
             </label>
         </p>
-        
-        <input type='submit' value="Add movie to database">
+        </div>
 
+        <div class="submit">
+        <input type='submit' value="Add movie to database">
+        </div>
     </form>
+    </div>
 
 {% endblock %}

@@ -2,15 +2,25 @@
 
 {% block content %}
 
-<h2>{{title}}</h2>
-<h2>{{release_year}}</h2>
-<h2>{{origin}}</h2>
-<h2>{{director}}</h2>
-<h2>{{cast}}</h2>
-<h2>{{genre}}</h2>
-<h2>{{wiki}}</h2>
-<h2>{{plot}}</h2>
-<h2><a href='/edit?id={{movie.id}}'>edit me?</a></h2>
-<h2><a href='/delete?id={{movie.id}}'>delete me?</a></h2>
+<h1>{{title}}</h1>
+<hr>
+<div class="inner-wrap">
+<h2>Released: {{release_year}} </h2>
+<br />
+<h2>Directed by: {{director}}</h2>
+<br />
+<h2>Originating from: {{origin}}</h2>
+<br />
+<h2>Featuring: {{cast}}</h2>
+<br />
+<h2>Genre: {{genre}}</h2>
+<br />
+<h2>Wiki Link: {{wiki}}</h2>
+<br />
+<h2>Movie Synopsis: {{plot}}</h2>
+<br />
+<h2><a href='/edit?id={{movie.id}}'>Is something incorrect? Edit me!</a></h2>
+<h2><a href='/delete?id={{movie.id}}'>Do you despise this movie? Delete me!</a></h2>
+</div>
 
 {% endblock %}

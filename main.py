@@ -69,6 +69,8 @@ def movie_listing():
 @app.route('/add', methods=['GET','POST'])
 def add_movie():
     
+    blank_error = ''
+
     if request.method == 'POST':
         release_year = request.form['release_year'] 
         title = request.form['title']
@@ -79,10 +81,18 @@ def add_movie():
         wiki = request.form['wiki']
         plot = request.form['plot']
 
-        new_movie = Movie(release_year, title, origin, director, cast, genre, wiki, plot)
-        db.session.add(new_movie)
-        db.session.commit()
-        return redirect('/movies')
+        if len(title) == 0 or len(release_year) == 0 or len(origin) == 0 or len(cast) == 0 or len(wiki) == 0 or len(plot) == 0 or len(director) == 0 or len(genre) == 0:
+            blank_error = 'Please fill in all fields'
+
+        #TODO: add in wiki link validation    
+
+        if not blank_error:
+            new_movie = Movie(release_year, title, origin, director, cast, genre, wiki, plot)
+            db.session.add(new_movie)
+            db.session.commit()
+            return redirect('/movies')
+        else:
+            return render_template('add-movie.html', blank_error=blank_error)
 
     return render_template('add-movie.html')
 
@@ -128,25 +138,29 @@ def edit_movie():
         if len(wiki) > 0: 
             movie.wiki = wiki
             db.session.commit()
+        #TODO: add in wiki link validation 
 
         plot = request.form['plot']
         if len(plot) > 0: 
             movie.plot = plot
             db.session.commit()
 
-        return render_template('edited.html', movie=movie)
+        return redirect('/movies')
     
-    return render_template('edit-movie.html', movie=movie)
+    return render_template('edit-movie.html', movie=movie) #TODO: add empty_error
 
 
-
-#ADD PAGE - ARE YOU SURE?
-@app.route('/delete')
+@app.route('/delete', methods=['GET','POST'])
 def delete_movie():
+    
     id = request.args.get('id', '')
     movie = Movie.query.get(id)
-    db.session.delete(movie)
-    db.session.commit() 
+
+    if request.method == 'POST':
+        db.session.delete(movie)
+        db.session.commit() 
+        return redirect('/movies')
+
     return render_template('delete-movie.html', movie=movie)
 
 
@@ -154,7 +168,10 @@ def delete_movie():
 @app.route('/search', methods=['GET','POST'])
 def search():
 
+    # TODO: make search case-insensitive
+
     except_error = ''
+    empty_error = ''
 
     if request.method == 'POST':
 
@@ -203,7 +220,10 @@ def search():
             except AttributeError:
                 except_error = "Sorry, no movies match your query"
 
-    return render_template('search.html', except_error=except_error)
+        if len(title) == 0 and len(release_year) == 0 and len(origin) == 0 and len(director) == 0 and len(genre) == 0:
+            empty_error = "Please enter at least one search term"
+
+    return render_template('search.html', except_error=except_error, empty_error=empty_error)
 
 
 if __name__ == "__main__":

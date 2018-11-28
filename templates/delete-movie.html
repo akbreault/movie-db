@@ -2,6 +2,14 @@
 
 {% block content %}
 
-    <h2>{{movie.title}} has been deleted from the database</h2>
+<div class="form">
+<form action="/delete?id={{movie.id}}" method="post">
+    <div class="submit">
+    <input type='submit' value="Delete this movie!">
+    </div>
+</form>
+</div>
+
+<h1><a href='/movies?id={{movie.id}}'>No - I regret it! Take me back!</a></h1>
 
 {% endblock %}

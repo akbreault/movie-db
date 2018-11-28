@@ -4,7 +4,12 @@
 
 <h1>Edit {{movie.title}}</h1>
 
+<div class="form">
+
+<span class="error">{{empty_error}}</span>
+
     <form action="/edit?id={{movie.id}}" method="post">
+        <div class="inner-wrap">
         <p>
             <label>movie title
             <input name="title" type="text" value="{{title}}">
@@ -51,11 +56,15 @@
         <p>
             <label>plot   
             <input name="plot" type="text" value="{{plot}}">
+            <!--TODO: update to textarea and catch exception if empty-->  
             </label>
         </p>
-        
+        </div>
+        <div class='submit'>
         <input type='submit' value="Edit movie details">
-
+        </div>
+ 
     </form>
+    </div>
 
 {% endblock %}
