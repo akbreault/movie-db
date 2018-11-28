@@ -94,25 +94,46 @@ def edit_movie():
     movie = Movie.query.get(id)
 
     if request.method == 'POST':
-        release_year = request.form['release_year'] 
+        release_year = request.form['release_year']
+        if len(release_year) > 0: 
+            movie.release_year = release_year
+            db.session.commit()
+
         title = request.form['title']
+        if len(title) > 0: 
+            movie.title = title
+            db.session.commit()
+
         origin = request.form['origin']
+        if len(origin) > 0: 
+            movie.origin = origin
+            db.session.commit()
+
         director = request.form['director']
+        if len(title) > 0: 
+            movie.title = title
+            db.session.commit()
+
         cast = request.form['cast']
+        if len(cast) > 0: 
+            movie.cast = cast
+            db.session.commit()
+
         genre = request.form['genre']
+        if len(genre) > 0: 
+            movie.genre = genre
+            db.session.commit()
+
         wiki = request.form['wiki']
+        if len(wiki) > 0: 
+            movie.wiki = wiki
+            db.session.commit()
+
         plot = request.form['plot']
+        if len(plot) > 0: 
+            movie.plot = plot
+            db.session.commit()
 
-        movie.title = title
-        movie.release_year = release_year 
-        movie.origin = origin
-        movie.director = director
-        movie.cast = cast
-        movie.genre = genre
-        movie.wiki = wiki
-        movie.plot = plot
-
-        db.session.commit()
         return render_template('edited.html', movie=movie)
     
     return render_template('edit-movie.html', movie=movie)
@@ -133,44 +154,56 @@ def delete_movie():
 @app.route('/search', methods=['GET','POST'])
 def search():
 
+    except_error = ''
+
     if request.method == 'POST':
 
         title = request.form['title']
         if len(title) > 0:
-            movie = Movie.query.filter_by(title=title).first()
-            #CATCH ERROR
-            id = movie.id
-            return redirect("/movies?id="+ str(id))
+            try:
+                movie = Movie.query.filter_by(title=title).first()
+                id = movie.id
+                return redirect("/movies?id="+ str(id))
+            except AttributeError:
+                except_error = "Sorry, no movies match your query"
 
         release_year = request.form['release_year']
         if len(release_year) > 0:
-            movie = Movie.query.filter_by(release_year=release_year).first()
-            #CATCH ERROR
-            id = movie.id
-            return redirect("/movies?id="+ str(id))
+            try:
+                movie = Movie.query.filter_by(release_year=release_year).first()
+                id = movie.id
+                return redirect("/movies?id="+ str(id))
+            except AttributeError:
+                except_error = "Sorry, no movies match your query"
 
         origin = request.form['origin']
         if len(origin) > 0:
-            movie = Movie.query.filter_by(origin=origin).first()
-            #CATCH ERROR
-            id = movie.id
-            return redirect("/movies?id="+ str(id))
+            try:
+                movie = Movie.query.filter_by(origin=origin).first()
+                id = movie.id
+                return redirect("/movies?id="+ str(id))
+            except AttributeError:
+                except_error = "Sorry, no movies match your query"
 
         director = request.form['director']
         if len(director) > 0:
-            movie = Movie.query.filter_by(director=director).first()
-            #CATCH ERROR
-            id = movie.id
-            return redirect("/movies?id="+ str(id))
+            try:
+                movie = Movie.query.filter_by(director=director).first()
+                id = movie.id
+                return redirect("/movies?id="+ str(id))
+            except AttributeError:
+                except_error = "Sorry, no movies match your query"
 
         genre = request.form['genre']
         if len(genre) > 0:
-            movie = Movie.query.filter_by(genre=genre).first()
-            #CATCH ERROR
-            id = movie.id
-            return redirect("/movies?id="+ str(id))
+            try:
+                movie = Movie.query.filter_by(genre=genre).first()
+                id = movie.id
+                return redirect("/movies?id="+ str(id))
+            except AttributeError:
+                except_error = "Sorry, no movies match your query"
 
-    return render_template('search.html')
+    return render_template('search.html', except_error=except_error)
 
 
 if __name__ == "__main__":
