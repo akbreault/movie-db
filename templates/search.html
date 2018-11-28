@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Search things here</h2>
+    <form action="/search" method="post">
+        <p>
+            <label>movie title
+            <input name="title" type="text" value="{{title}}">
+            </label>
+        </p>
+
+        <p>
+            <label>release year   
+            <input name="release_year" type="text" value="{{release_year}}">
+            </label>
+        </p>
+    
+        <p>
+            <label>origin   
+            <input name="origin" type="text" value="{{origin}}">
+            </label>
+        </p>
+        
+        <p>
+            <label>director   
+            <input name="director" type="text" value="{{director}}">
+            </label>
+        </p>
+             
+        <p>
+            <label>genre   
+            <input name="genre" type="text" value="{{genre}}">
+            </label>
+        </p>
+            
+        <input type='submit' value="Search database">
+    
+    </form>
+
+{% endblock %}
