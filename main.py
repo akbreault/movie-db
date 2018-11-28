@@ -9,7 +9,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 class Movie(db.Model):
-    __tablename__ = 'Movie'
     id = db.Column(db.Integer, primary_key=True)
     release_year = db.Column(db.Integer)
     title = db.Column(db.String(500))
@@ -18,7 +17,7 @@ class Movie(db.Model):
     cast = db.Column(db.String(1000))     
     genre = db.Column(db.String(500))  
     wiki = db.Column(db.String(500))
-    plot = db.Column(db.String(500))
+    plot = db.Column(db.String(2000))
 
     def __init__(self, release_year, title, origin, director, cast, genre, wiki, plot):
         self.release_year = release_year
